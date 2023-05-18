@@ -13,8 +13,9 @@ class KitirImport implements WithMultipleSheets
     {
         return [
             'REKAP POTONGAN' =>  new Sheet1(),
-            // 'Worksheet 2' => ,
-            // 'Worksheet 3' => ,
+            'Simp. Wajib' => new Sheet2(),
+            'Reguler' => new Sheet3(),
+            'BJS' => new Sheet4()
         ];
     }
 }

@@ -33,9 +33,9 @@ class FormUpload extends Component
 
         $this->file->storeAs('public/import/', $this->file->getFilename());
         $import = new KitirImport();
-        $import->onlySheets('REKAP POTONGAN', 'Simp. Wajib');
+        $import->onlySheets('REKAP POTONGAN', 'Simp. Wajib','Reguler','BJS');
         $row = Excel::toArray($import, $this->file->getRealPath());
-        var_dump($row);
+        dd($row);
     }
 
     public function render()
