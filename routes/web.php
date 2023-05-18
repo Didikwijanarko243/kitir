@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\masterController;
+use App\Http\Controllers\summaryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.home');
 });
+
+Route::get('/master', [masterController::class, 'index'])->name('master');
+Route::get('/summary', [summaryController::class, 'index'])->name('summary');
+
+
