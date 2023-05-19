@@ -13,7 +13,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item {{$sidebar == 'home' ? 'active' : ''}}">
-        <a class="nav-link" href="{{url('/')}}">
+        <a class="nav-link" href="{{url('/home')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>

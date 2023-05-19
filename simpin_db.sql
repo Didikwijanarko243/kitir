@@ -1,0 +1,602 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : local mysql
+ Source Server Type    : MySQL
+ Source Server Version : 100427 (10.4.27-MariaDB)
+ Source Host           : localhost:3306
+ Source Schema         : simpin_db
+
+ Target Server Type    : MySQL
+ Target Server Version : 100427 (10.4.27-MariaDB)
+ File Encoding         : 65001
+
+ Date: 19/05/2023 10:51:45
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for detail_pinjaman_reguler_tab
+-- ----------------------------
+DROP TABLE IF EXISTS `detail_pinjaman_reguler_tab`;
+CREATE TABLE `detail_pinjaman_reguler_tab`  (
+  `reguler_id` int NOT NULL AUTO_INCREMENT,
+  `pinjaman_id` int NULL DEFAULT NULL,
+  `nip_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `bulan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `tahun` year NULL DEFAULT NULL,
+  `tanggal` date NULL DEFAULT NULL,
+  `jumlah_pinjaman` int NULL DEFAULT NULL,
+  `bunga` decimal(4, 2) NULL DEFAULT NULL,
+  `tenor` int NULL DEFAULT NULL,
+  `pot_pokok` decimal(10, 2) NULL DEFAULT NULL,
+  `pot_bunga` decimal(10, 2) NULL DEFAULT NULL,
+  `pot_jumlah` decimal(10, 2) NULL DEFAULT NULL,
+  `saldo_pokok` decimal(10, 2) NULL DEFAULT NULL,
+  `saldo_bunga` decimal(10, 2) NULL DEFAULT NULL,
+  `saldo_jumlah` decimal(10, 2) NULL DEFAULT NULL,
+  `pot_ke` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `keterangan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`reguler_id`) USING BTREE,
+  UNIQUE INDEX `reguler_id`(`reguler_id` ASC) USING BTREE,
+  INDEX `pinjaman_id`(`pinjaman_id` ASC) USING BTREE,
+  INDEX `detail_pinjaman_reguler_tab_ibfk_2`(`nip_id` ASC) USING BTREE,
+  CONSTRAINT `detail_pinjaman_reguler_tab_ibfk_1` FOREIGN KEY (`pinjaman_id`) REFERENCES `master_pinjaman` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `detail_pinjaman_reguler_tab_ibfk_2` FOREIGN KEY (`nip_id`) REFERENCES `master_anggota` (`nip`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of detail_pinjaman_reguler_tab
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for detail_simpanan_wajib_tab
+-- ----------------------------
+DROP TABLE IF EXISTS `detail_simpanan_wajib_tab`;
+CREATE TABLE `detail_simpanan_wajib_tab`  (
+  `wajib_id` int NOT NULL AUTO_INCREMENT,
+  `nip_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `periode_anggota` date NULL DEFAULT NULL,
+  `bulan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `tahun` year NULL DEFAULT NULL,
+  `total_simpanan_pokok` decimal(10, 2) NULL DEFAULT NULL,
+  `total_simpanan_wajib` decimal(10, 2) NULL DEFAULT NULL,
+  `total_simpanan_khusus` decimal(10, 2) NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`wajib_id`) USING BTREE,
+  INDEX `wajib_id`(`wajib_id` ASC) USING BTREE,
+  INDEX `nip_id`(`nip_id` ASC) USING BTREE,
+  CONSTRAINT `detail_simpanan_wajib_tab_ibfk_1` FOREIGN KEY (`nip_id`) REFERENCES `master_anggota` (`nip`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of detail_simpanan_wajib_tab
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for failed_jobs
+-- ----------------------------
+DROP TABLE IF EXISTS `failed_jobs`;
+CREATE TABLE `failed_jobs`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `failed_jobs_uuid_unique`(`uuid` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of failed_jobs
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for master_anggota
+-- ----------------------------
+DROP TABLE IF EXISTS `master_anggota`;
+CREATE TABLE `master_anggota`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `telfon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `alamat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `bagian` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `devisi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `jabatan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `nip`(`nip` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 151 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of master_anggota
+-- ----------------------------
+INSERT INTO `master_anggota` VALUES (1, '931732260I', 'ADHE RIFKY IRWANSYAH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (2, '820341115I', 'ADI SUSANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (3, '941631018I', 'ADIN NURROHMAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (4, '861121026I', 'AFINA SAFARINA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (5, '951831206I', 'AFINSA RAHMADIAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (6, '840441024I', 'AGUS ARIANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (7, '840443040I', 'AGUS PRASETYO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (8, '7191024K3', 'AGUS SETYANA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (9, '7394120JA', 'AGUS SUBAGIO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (10, '840931131I', 'AHMAD ABDUL QODIR', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (11, '961831208I', 'AHMAD FARHAN FUADI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (12, '840441019I', 'AKHMAD KHAYUBI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (13, '881043239I', 'AKHMAD HARIADI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (14, '810341113I', 'AKTIFAN PRIBADI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (15, '911531028I', 'ALFRINO ANDREAS SAMOSIR', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (16, '931241015I', 'ALI HAMID BARASIT', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (17, '941631100I', 'ALI MAHMUDI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (18, '871042232I', 'ALVIN NUR', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (19, '951731023I', 'AMAR SYAHIDIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (20, '931241006I', 'ANDI SETYO BUDI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (21, '851033169I', 'ANDI SUMANTRI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (22, '861031069I', 'ANGGA FEBRINURYANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (23, '961731413I', 'ANGGA RIDWAN PRATAMA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (24, '810341117I', 'ANGGA SEKTIAWAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (25, '881124142I', 'ANI ANDRIYANTI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (26, '6892204JA', 'ANI WAHJUNINGSIH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (27, '850441022I', 'ANURI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (28, '841031060I', 'ANWAR RIFAI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (29, '840441020I', 'ARI WIDIYANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (30, '891042231I', 'ARIF KURNIAWAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (31, '931241013I', 'ASIP DWI CAHYA PUTRA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (32, '871131209I', 'ATIK SETYO NINGRUM', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (33, '7292223JA', 'BAMBANG MUJIONO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (34, '921631101I', 'BAYU GILANG ADHARI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (35, '861125094I', 'BAYU KURNIAWAN TUASIKAL', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (36, '911241004I', 'BEBIN HIDAYATULLOH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (37, '941832059I', 'BERNARDUS SIGIT A.W', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (38, '830931120I', 'BUDI SULISTYO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (39, '931832060I', 'BUDI UTOMO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (40, '921241009I', 'BUDIANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (41, '851031068I', 'CAHYO KUSBIANTORO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (42, '840935202I', 'CHANDRA EKA SETYAWAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (43, '810923055I', 'DADAN RAMDANI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (44, '891421226I', 'DEDY PRIMA YUNIARDI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (45, '931721699I', 'DELFI ARISYADI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (46, '891041187I', 'DENY PRATAMA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (47, '841031062I', 'DIAN ADI WIYANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (48, '951921019I', 'DICKY ANDRIAWAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (49, '810341109I', 'DIDIK HADIYANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (50, '921241002I', 'DIDIK HERIYANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (51, '891531061I', 'DIDIK PURWANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (52, '901421153I', 'DIMAS VEKTOR ARIDIANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (53, '851034063I', 'DIYAH JUWITASARI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (54, '6991022K3', 'DJOKO ARYADI PURNOMO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (55, '6891153JA', 'DJOKO SAPTO HANDOKO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (56, '830441034I', 'ERIK GIAN ARISTIAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (57, '841035172I', 'ERRY RONALD TISNA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (58, '820441017I', 'ERWIN SETYAWAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (59, '921241007I', 'FIRMAN SETIYAWINATA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (60, '840451035I', 'GAMIATI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (61, '901631019I', 'GANNY DIAS RAMATIKA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (62, '921631102I', 'HADI SUPENO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (63, '921721710I', 'HARRY ADRIANSYAH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (64, '851032064I', 'HASNA ABADININGRUM', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (65, '961831170I', 'HAYAN FAJRIYANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (66, '810343086I', 'HAYUK DWI ARTI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (67, '840921033I', 'HENDRA SURYA KUSUMAH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (68, '820341126I', 'HENDY DWI CAHYONO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (69, '820341119I', 'HERY SUNGKONO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (70, '7294058JA', 'HONO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (71, '901041188I', 'HUDAN DIKRI DANDIRI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (72, '820341110I', 'HUTA RIANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (73, '830341108I', 'IBNU SOFYAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (74, '961934041I', 'IHSANUL FIKRI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (75, '830441033I', 'IMAM KHOIRI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (76, '931241012I', 'JEFFRI MARDIYANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (77, '840441026I', 'JOKO SANTOSO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (78, '820341120I', 'KHAYAT WARTONO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (79, '7394126JA', 'KHUDORI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (80, '891041189I', 'KOKO PRIANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (81, '961732397I', 'KRESNA KUSUMA AERLANGGA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (82, '7194100JA', 'M. HARIYANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (83, '7294027JA', 'M. LUTFI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (84, '961732264I', 'M. SADDAM YUSUF', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (85, '7394007JA', 'M. SYAIFUL ANWAR S.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (86, '7091080JA', 'MARLIA WIDJAJANTI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (87, '770223047I', 'MILA TARTIARINI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (88, '871032074I', 'MOCH. ANGGI FIRMANSYAH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (89, '931241014I', 'MOCH. AVIF ROMADHONI R.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (90, '7092125JA', 'MOCH.ADI MULYONO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (91, '881043240I', 'MOCHAMAD FAIZAL', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (92, '881043241I', 'MOCHAMAD SUPRIADI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (93, '7294099JA', 'MOH. ALI ARIFIN A.B', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (94, '921241008I', 'MOH. ALWIN ALAMSYAH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (95, '921241011I', 'MOH. FARIS WAHYUDI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (96, '7494029JA', 'MOHAMMAD FAUZI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (97, '921241005I', 'MOHAMMAD MARDIANSYAH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (98, '7194116JA', 'MOHAMMAD SUBEKHI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (99, '840441023I', 'MUH. SUHADA MUHYIDDIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (100, '851021135I', 'MUHAMAD SUBKHAN YUDHISTIRA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (101, '941731024I', 'MUHAMMAD FAHRI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (102, '921731251I', 'MUHAMMAD JOKO SUTRISNO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (103, '851122048I', 'MUHAMMAD RIZA FAHRUDDIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (104, '951731025I', 'MUHAMMAD SYAIFUL HAFAZI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (105, '921241003I', 'MUKHAMAD EFFENDI ALAQSO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (106, '951632021I', 'PRIZA ACHMADI ANFAL', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (107, '850441021I', 'PURI HARIADI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (108, '931631103I', 'PUTUT DWI PRASETYO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (109, '881721744I', 'RAHMADI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (110, '951831174I', 'RAHMAT DIMYATI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (111, '931831049I', 'RAHMED DIO HANDI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (112, '810341123I', 'RENO ADHI PRATAMA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (113, '961831175I', 'ROBBI KURNIA JULIANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (114, '931631105I', 'ROBBY KURNIA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (115, '830921039I', 'ROBY DANU BRATA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (116, '840441016I', 'ROCHMAD ROMADON', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (117, '7293048JA', 'SAICHUL MUHTAR', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (118, '850441015I', 'SAMSYUL BAHRI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (119, '7091026K3', 'SANTOSA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (120, '891721759I', 'SARONI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (121, '941721762I', 'SATRIO AMARELA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (122, '820341124I', 'SIGIT HADI PRASETYO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (123, '7093159JA', 'SOEYANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (124, '931721768I', 'STEFANUS LAGA SUBAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (125, '830341125I', 'SUCAHYONO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (126, '7294098JA', 'SUDIARTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (127, '7494001JA', 'SUGENG PRAYITNO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (128, '881121004I', 'SULINDA PUSPITA SARI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (129, '7394064JA', 'SUMARDI TIMAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (130, '7294085JA', 'SUMARDI W.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (131, '770221083I', 'SUPRAPTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (132, '7394028JA', 'SUPRIYATIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (133, '881721770I', 'SYAFRUDIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (134, '840341112I', 'SYAIFUL ACHMAD', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (135, '7392207JA', 'TATAT JUWITA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (136, '7294131JA', 'TAUFIK KODIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (137, '911443099I', 'TIMBUL WAHYUDI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (138, '6992206JA', 'TUTIK SETIONINGSIH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (139, '7392209JA', 'VERA HERLINA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (140, '840451036I', 'WALIYUL KASANAH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (141, '820341107I', 'WIDODO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (142, '7392126JA', 'YANI MULYANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (143, '830921057I', 'YENI FAJARIATI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (144, '720221058I', 'YOSEFAN JOHAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (145, '891431155I', 'YUANG WINETA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (146, '850441018I', 'YUDI KRISWANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (147, '891532067I', 'YUHARDIANSYAH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (148, '871042233I', 'YULY RIZKYANTO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (149, '6991011K3', 'ZAINAL ARIFIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `master_anggota` VALUES (150, '850933178I', 'ZULFINA DHINI ANNISAWATI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for master_pinjaman
+-- ----------------------------
+DROP TABLE IF EXISTS `master_pinjaman`;
+CREATE TABLE `master_pinjaman`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pinjaman_nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `pinjaman_kode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of master_pinjaman
+-- ----------------------------
+INSERT INTO `master_pinjaman` VALUES (1, 'Pinjaman Reguler', 'PIN001', NULL, NULL, NULL);
+INSERT INTO `master_pinjaman` VALUES (2, 'Pinjaman Bjs', 'PIN002', NULL, NULL, NULL);
+INSERT INTO `master_pinjaman` VALUES (3, 'Pinjaman Khusus', 'PIN003', NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for master_potongan
+-- ----------------------------
+DROP TABLE IF EXISTS `master_potongan`;
+CREATE TABLE `master_potongan`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `potongan_nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `potongan_kode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of master_potongan
+-- ----------------------------
+INSERT INTO `master_potongan` VALUES (1, 'Simpanan Wajib', 'POT001', NULL, NULL, NULL);
+INSERT INTO `master_potongan` VALUES (2, 'Pinjaman Reguler', 'POT002', NULL, NULL, NULL);
+INSERT INTO `master_potongan` VALUES (3, 'Pinjaman Bank Jatim Syariah', 'POT003', NULL, NULL, NULL);
+INSERT INTO `master_potongan` VALUES (4, 'Pinjaman Khusus', 'POT004', NULL, NULL, NULL);
+INSERT INTO `master_potongan` VALUES (5, 'Toko', 'POT005', NULL, NULL, NULL);
+INSERT INTO `master_potongan` VALUES (6, 'Persatuan Ibu', 'POT006', NULL, NULL, NULL);
+INSERT INTO `master_potongan` VALUES (7, 'Sosial PP', 'POT007', NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for master_simpanan
+-- ----------------------------
+DROP TABLE IF EXISTS `master_simpanan`;
+CREATE TABLE `master_simpanan`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `simpanan_nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `simpanan_kode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of master_simpanan
+-- ----------------------------
+INSERT INTO `master_simpanan` VALUES (1, 'POKOK', 'SIM001', NULL, NULL, NULL);
+INSERT INTO `master_simpanan` VALUES (2, 'WAJIB', 'SIM002', NULL, NULL, NULL);
+INSERT INTO `master_simpanan` VALUES (3, 'KHUSUS', 'SIM003', NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for migrations
+-- ----------------------------
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE `migrations`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of migrations
+-- ----------------------------
+INSERT INTO `migrations` VALUES (1, '2014_10_12_000000_create_users_table', 1);
+INSERT INTO `migrations` VALUES (2, '2014_10_12_100000_create_password_resets_table', 1);
+INSERT INTO `migrations` VALUES (3, '2019_08_19_000000_create_failed_jobs_table', 1);
+
+-- ----------------------------
+-- Table structure for password_resets
+-- ----------------------------
+DROP TABLE IF EXISTS `password_resets`;
+CREATE TABLE `password_resets`  (
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  INDEX `password_resets_email_index`(`email` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of password_resets
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for rekab_tab
+-- ----------------------------
+DROP TABLE IF EXISTS `rekab_tab`;
+CREATE TABLE `rekab_tab`  (
+  `rekap_id` int NOT NULL AUTO_INCREMENT,
+  `nip_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `pot_simpanan_wajib` decimal(10, 2) NULL DEFAULT NULL,
+  `pot_reguler` decimal(10, 2) NULL DEFAULT NULL,
+  `pot_bjs` decimal(10, 2) NULL DEFAULT NULL,
+  `pot_toko` decimal(10, 2) NULL DEFAULT NULL,
+  `pot_khusus` decimal(10, 2) NULL DEFAULT NULL,
+  `pot_pi` decimal(10, 2) NULL DEFAULT NULL,
+  `pot_sosial` decimal(10, 2) NULL DEFAULT NULL,
+  `bulan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `tahun` year NULL DEFAULT NULL,
+  `tanggal` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `uniqkey` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`rekap_id`) USING BTREE,
+  INDEX `rekap_id`(`rekap_id` ASC) USING BTREE,
+  INDEX `rekab_tab_ibfk_1`(`nip_id` ASC) USING BTREE,
+  CONSTRAINT `rekab_tab_ibfk_1` FOREIGN KEY (`nip_id`) REFERENCES `master_anggota` (`nip`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of rekab_tab
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for upload_tab
+-- ----------------------------
+DROP TABLE IF EXISTS `upload_tab`;
+CREATE TABLE `upload_tab`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nama_file` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `location` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `jam` time NULL DEFAULT NULL,
+  `tanggal` date NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of upload_tab
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `users_email_unique`(`email` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 151 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO `users` VALUES (1, 'ADHE RIFKY IRWANSYAH', '931732260I', 'test1@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (2, 'ADI SUSANTO', '820341115I', 'test2@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (3, 'ADIN NURROHMAN', '941631018I', 'test3@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (4, 'AFINA SAFARINA', '861121026I', 'test4@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (5, 'AFINSA RAHMADIAN', '951831206I', 'test5@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (6, 'AGUS ARIANTO', '840441024I', 'test6@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (7, 'AGUS PRASETYO', '840443040I', 'test7@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (8, 'AGUS SETYANA', '7191024K3', 'test8@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (9, 'AGUS SUBAGIO', '7394120JA', 'test9@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (10, 'AHMAD ABDUL QODIR', '840931131I', 'test10@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (11, 'AHMAD FARHAN FUADI', '961831208I', 'test11@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (12, 'AKHMAD KHAYUBI', '840441019I', 'test12@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (13, 'AKHMAD HARIADI', '881043239I', 'test13@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (14, 'AKTIFAN PRIBADI', '810341113I', 'test14@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (15, 'ALFRINO ANDREAS SAMOSIR', '911531028I', 'test15@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (16, 'ALI HAMID BARASIT', '931241015I', 'test16@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (17, 'ALI MAHMUDI', '941631100I', 'test17@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (18, 'ALVIN NUR', '871042232I', 'test18@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (19, 'AMAR SYAHIDIN', '951731023I', 'test19@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (20, 'ANDI SETYO BUDI', '931241006I', 'test20@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (21, 'ANDI SUMANTRI', '851033169I', 'test21@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (22, 'ANGGA FEBRINURYANTO', '861031069I', 'test22@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (23, 'ANGGA RIDWAN PRATAMA', '961731413I', 'test23@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (24, 'ANGGA SEKTIAWAN', '810341117I', 'test24@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (25, 'ANI ANDRIYANTI', '881124142I', 'test25@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (26, 'ANI WAHJUNINGSIH', '6892204JA', 'test26@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (27, 'ANURI', '850441022I', 'test27@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (28, 'ANWAR RIFAI', '841031060I', 'test28@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (29, 'ARI WIDIYANTO', '840441020I', 'test29@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (30, 'ARIF KURNIAWAN', '891042231I', 'test30@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (31, 'ASIP DWI CAHYA PUTRA', '931241013I', 'test31@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (32, 'ATIK SETYO NINGRUM', '871131209I', 'test32@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (33, 'BAMBANG MUJIONO', '7292223JA', 'test33@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (34, 'BAYU GILANG ADHARI', '921631101I', 'test34@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (35, 'BAYU KURNIAWAN TUASIKAL', '861125094I', 'test35@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (36, 'BEBIN HIDAYATULLOH', '911241004I', 'test36@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (37, 'BERNARDUS SIGIT A.W', '941832059I', 'test37@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (38, 'BUDI SULISTYO', '830931120I', 'test38@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (39, 'BUDI UTOMO', '931832060I', 'test39@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (40, 'BUDIANTO', '921241009I', 'test40@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (41, 'CAHYO KUSBIANTORO', '851031068I', 'test41@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (42, 'CHANDRA EKA SETYAWAN', '840935202I', 'test42@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (43, 'DADAN RAMDANI', '810923055I', 'test43@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (44, 'DEDY PRIMA YUNIARDI', '891421226I', 'test44@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (45, 'DELFI ARISYADI', '931721699I', 'test45@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (46, 'DENY PRATAMA', '891041187I', 'test46@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (47, 'DIAN ADI WIYANTO', '841031062I', 'test47@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (48, 'DICKY ANDRIAWAN', '951921019I', 'test48@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (49, 'DIDIK HADIYANTO', '810341109I', 'test49@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (50, 'DIDIK HERIYANTO', '921241002I', 'test50@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (51, 'DIDIK PURWANTO', '891531061I', 'test51@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (52, 'DIMAS VEKTOR ARIDIANTO', '901421153I', 'test52@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (53, 'DIYAH JUWITASARI', '851034063I', 'test53@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (54, 'DJOKO ARYADI PURNOMO', '6991022K3', 'test54@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (55, 'DJOKO SAPTO HANDOKO', '6891153JA', 'test55@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (56, 'ERIK GIAN ARISTIAN', '830441034I', 'test56@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (57, 'ERRY RONALD TISNA', '841035172I', 'test57@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (58, 'ERWIN SETYAWAN', '820441017I', 'test58@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (59, 'FIRMAN SETIYAWINATA', '921241007I', 'test59@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (60, 'GAMIATI', '840451035I', 'test60@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (61, 'GANNY DIAS RAMATIKA', '901631019I', 'test61@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (62, 'HADI SUPENO', '921631102I', 'test62@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (63, 'HARRY ADRIANSYAH', '921721710I', 'test63@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (64, 'HASNA ABADININGRUM', '851032064I', 'test64@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (65, 'HAYAN FAJRIYANTO', '961831170I', 'test65@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (66, 'HAYUK DWI ARTI', '810343086I', 'test66@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (67, 'HENDRA SURYA KUSUMAH', '840921033I', 'test67@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (68, 'HENDY DWI CAHYONO', '820341126I', 'test68@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (69, 'HERY SUNGKONO', '820341119I', 'test69@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (70, 'HONO', '7294058JA', 'test70@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (71, 'HUDAN DIKRI DANDIRI', '901041188I', 'test71@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (72, 'HUTA RIANTO', '820341110I', 'test72@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (73, 'IBNU SOFYAN', '830341108I', 'test73@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (74, 'IHSANUL FIKRI', '961934041I', 'test74@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (75, 'IMAM KHOIRI', '830441033I', 'test75@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (76, 'JEFFRI MARDIYANTO', '931241012I', 'test76@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (77, 'JOKO SANTOSO', '840441026I', 'test77@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (78, 'KHAYAT WARTONO', '820341120I', 'test78@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (79, 'KHUDORI', '7394126JA', 'test79@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (80, 'KOKO PRIANTO', '891041189I', 'test80@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (81, 'KRESNA KUSUMA AERLANGGA', '961732397I', 'test81@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (82, 'M. HARIYANTO', '7194100JA', 'test82@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (83, 'M. LUTFI', '7294027JA', 'test83@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (84, 'M. SADDAM YUSUF', '961732264I', 'test84@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (85, 'M. SYAIFUL ANWAR S.', '7394007JA', 'test85@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (86, 'MARLIA WIDJAJANTI', '7091080JA', 'test86@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (87, 'MILA TARTIARINI', '770223047I', 'test87@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (88, 'MOCH. ANGGI FIRMANSYAH', '871032074I', 'test88@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (89, 'MOCH. AVIF ROMADHONI R.', '931241014I', 'test89@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (90, 'MOCH.ADI MULYONO', '7092125JA', 'test90@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (91, 'MOCHAMAD FAIZAL', '881043240I', 'test91@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (92, 'MOCHAMAD SUPRIADI', '881043241I', 'test92@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (93, 'MOH. ALI ARIFIN A.B', '7294099JA', 'test93@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (94, 'MOH. ALWIN ALAMSYAH', '921241008I', 'test94@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (95, 'MOH. FARIS WAHYUDI', '921241011I', 'test95@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (96, 'MOHAMMAD FAUZI', '7494029JA', 'test96@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (97, 'MOHAMMAD MARDIANSYAH', '921241005I', 'test97@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (98, 'MOHAMMAD SUBEKHI', '7194116JA', 'test98@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (99, 'MUH. SUHADA MUHYIDDIN', '840441023I', 'test99@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (100, 'MUHAMAD SUBKHAN YUDHISTIRA', '851021135I', 'test100@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (101, 'MUHAMMAD FAHRI', '941731024I', 'test101@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (102, 'MUHAMMAD JOKO SUTRISNO', '921731251I', 'test102@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (103, 'MUHAMMAD RIZA FAHRUDDIN', '851122048I', 'test103@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (104, 'MUHAMMAD SYAIFUL HAFAZI', '951731025I', 'test104@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (105, 'MUKHAMAD EFFENDI ALAQSO', '921241003I', 'test105@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (106, 'PRIZA ACHMADI ANFAL', '951632021I', 'test106@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (107, 'PURI HARIADI', '850441021I', 'test107@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (108, 'PUTUT DWI PRASETYO', '931631103I', 'test108@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (109, 'RAHMADI', '881721744I', 'test109@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (110, 'RAHMAT DIMYATI', '951831174I', 'test110@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (111, 'RAHMED DIO HANDI', '931831049I', 'test111@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (112, 'RENO ADHI PRATAMA', '810341123I', 'test112@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (113, 'ROBBI KURNIA JULIANTO', '961831175I', 'test113@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (114, 'ROBBY KURNIA', '931631105I', 'test114@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (115, 'ROBY DANU BRATA', '830921039I', 'test115@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (116, 'ROCHMAD ROMADON', '840441016I', 'test116@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (117, 'SAICHUL MUHTAR', '7293048JA', 'test117@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (118, 'SAMSYUL BAHRI', '850441015I', 'test118@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (119, 'SANTOSA', '7091026K3', 'test119@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (120, 'SARONI', '891721759I', 'test120@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (121, 'SATRIO AMARELA', '941721762I', 'test121@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (122, 'SIGIT HADI PRASETYO', '820341124I', 'test122@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (123, 'SOEYANTO', '7093159JA', 'test123@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (124, 'STEFANUS LAGA SUBAN', '931721768I', 'test124@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (125, 'SUCAHYONO', '830341125I', 'test125@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (126, 'SUDIARTO', '7294098JA', 'test126@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (127, 'SUGENG PRAYITNO', '7494001JA', 'test127@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (128, 'SULINDA PUSPITA SARI', '881121004I', 'test128@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (129, 'SUMARDI TIMAN', '7394064JA', 'test129@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (130, 'SUMARDI W.', '7294085JA', 'test130@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (131, 'SUPRAPTO', '770221083I', 'test131@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (132, 'SUPRIYATIN', '7394028JA', 'test132@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (133, 'SYAFRUDIN', '881721770I', 'test133@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (134, 'SYAIFUL ACHMAD', '840341112I', 'test134@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (135, 'TATAT JUWITA', '7392207JA', 'test135@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (136, 'TAUFIK KODIN', '7294131JA', 'test136@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (137, 'TIMBUL WAHYUDI', '911443099I', 'test137@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (138, 'TUTIK SETIONINGSIH', '6992206JA', 'test138@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (139, 'VERA HERLINA', '7392209JA', 'test139@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (140, 'WALIYUL KASANAH', '840451036I', 'test140@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (141, 'WIDODO', '820341107I', 'test141@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (142, 'YANI MULYANTO', '7392126JA', 'test142@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (143, 'YENI FAJARIATI', '830921057I', 'test143@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (144, 'YOSEFAN JOHAN', '720221058I', 'test144@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (145, 'YUANG WINETA', '891431155I', 'test145@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (146, 'YUDI KRISWANTO', '850441018I', 'test146@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (147, 'YUHARDIANSYAH', '891532067I', 'test147@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (148, 'YULY RIZKYANTO', '871042233I', 'test148@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (149, 'ZAINAL ARIFIN', '6991011K3', 'test149@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+INSERT INTO `users` VALUES (150, 'ZULFINA DHINI ANNISAWATI', '850933178I', 'test150@kitir.com', '0000-00-00 00:00:00', '$2y$10$mazmf/x66x88kSCdPaoFQuCOsnhL5VLPfoI5J5TsRBDB/JFg0dtZC', NULL, NULL, NULL);
+
+SET FOREIGN_KEY_CHECKS = 1;
