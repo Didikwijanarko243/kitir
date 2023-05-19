@@ -12,4 +12,8 @@ class simpananWajib extends Model
     protected $primaryKey = 'wajib_id';
 
     protected $fillable = ['nip_id', 'periode_anggota', 'bulan', 'tahun', 'total_simpanan_pokok', 'total_simpanan_wajib', 'total_simpanan_khusus'];
+    public function pegawai()
+    {
+        return $this->hasOne(pegawaiModel::class, 'nip', 'nip_id');
+    }
 }
