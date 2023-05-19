@@ -25,7 +25,10 @@
 
                     <label for="formFile" class="form-label">Import Excel Disini..</label>
                     <input class="form-control" type="file" id="formFile" wire:model="file">
-
+                    @error('file')
+                        
+                        <span id="helpBlock" class="help-block" style="color:red;">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <button class="btn btn-primary btn-icon-split btn-sm" type="submit">
@@ -33,7 +36,7 @@
                         <i class="fas fa-file-upload"></i>
                     </span>
                     <span wire:loading.remove>Upload</span>
-                    <span wire:loading  >Uploading...</span>
+                    <span wire:loading>Uploading...</span>
                 </button>
             </form>
         </div>

@@ -17,5 +17,16 @@ class KitirImport implements WithMultipleSheets
             'Reguler' => new Sheet3(),
             'BJS' => new Sheet4()
         ];
+
+
+
+        
+
+        // return $arr = array_map(function ($ar){
+        //     return array (
+        //         'REKAP' => $ar['REKAP POTONGAN'],
+        //         'SIMPANANWAJIB' => $ar['Simp. Wajib']
+        //     );
+        // },$arr);
     }
 }

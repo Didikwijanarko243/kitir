@@ -101,6 +101,19 @@
     <!-- Page level plugins -->
     
     @livewireScripts
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Livewire.on('notify', pesan => {
+            
+
+            Swal.fire({
+                title: pesan.type == 'success' ? 'Hooray' : 'Sorry',
+                text: pesan.pesan,
+                icon: pesan.type,
+                confirmButtonText: 'Cool'
+            })
+        })
+    </script>
 </body>
 
 </html>
